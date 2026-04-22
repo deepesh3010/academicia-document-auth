@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<span id="usernameDisplay" class="text-gray-600"></span>
+<body class="bg-gray-100 p-10">
+
+<h1 class="text-3xl font-bold mb-6">
+Document Authentication Dashboard
+</h1>
+
+<div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">Document Authentication Dashboard</h1>
+
+    <button onclick="logout()" 
+    class="bg-red-500 text-white px-4 py-2 rounded">
+        Logout
+    </button>
+</div>
+
+<!-- Upload -->
+
+<div class="bg-white p-6 rounded shadow mb-6">
+
+    <h2 class="text-xl font-semibold mb-3">Upload Document</h2>
+    
+    <input type="file" id="fileInput" class="mb-3">
+    
+    <select id="signerSelect" class="border p-2 mb-3">
+        <option value="">Select Signer</option>
+        </select>
+    
+    <button onclick="uploadDoc()" 
+    class="bg-green-600 text-white px-4 py-2 rounded">
+    Upload
+    </button>
+    
+    <h2 class="text-xl font-bold mt-6">My Documents</h2>
+
+    <table class="table-auto border w-full mt-3">
+    <thead>
+    <tr>
+    <th class="border px-4 py-2">Document ID</th>
+    <th class="border px-4 py-2">Signer</th>
+    <th class="border px-4 py-2">Status</th>
+    </tr>
+    </thead>
+    <tbody id="userDocs"></tbody>
+    </table>
+
+
+<!-- Pending Documents -->
+<h2 class="text-xl font-bold mt-6">Pending Documents</h2>
+
+<table class="table-auto border w-full mt-3">
+<thead>
+<tr>
+<th class="border px-4 py-2">Document ID</th>
+<th class="border px-4 py-2">Signer</th>
+<th class="border px-4 py-2">Status</th>
+</tr>
+</thead>
+<tbody id="pendingDocs"></tbody>
+</table>
+    </div>
+    <h2 class="text-xl font-bold mt-6">Signed Documents</h2>
+
+    <table class="table-auto border w-full mt-3">
+    <thead>
+    <tr>
+    <th class="border px-4 py-2">Document ID</th>
+    <th class="border px-4 py-2">Signer</th>
+    <th class="border px-4 py-2">Download</th>
+    </tr>
+    </thead>
+    <tbody id="signedDocs"></tbody>
+    </table>
+<!-- Sign -->
+<div id="signerSection" style="display:none">
+
+    <div class="bg-white p-6 rounded shadow mb-6">
+    
+    <h2 class="text-xl font-semibold mb-3">Pending to Sign</h2>
+    
+    <table class="table-auto border w-full mt-3">
+    <thead>
+    <tr>
+    <th class="border px-4 py-2">Document ID</th>
+    <th class="border px-4 py-2">Uploaded By</th>
+    <th class="border px-4 py-2">Action</th>
+    </tr>
+    </thead>
+    <tbody id="signerPendingDocs"></tbody>
+    </table>
+    
+    </div>
+    
+    <div class="bg-white p-6 rounded shadow mb-6">
+    
+    <h2 class="text-xl font-semibold mb-3">Signed Documents</h2>
+    
+    <table class="table-auto border w-full mt-3">
+    <thead>
+    <tr>
+    <th class="border px-4 py-2">Document ID</th>
+    <th class="border px-4 py-2">Download</th>
+    </tr>
+    </thead>
+    <tbody id="signedBySigner"></tbody>
+    </table>
+    
+    </div>
+    
+    </div>
+
+<!-- Verify -->
+
+<div class="bg-white p-6 rounded shadow">
+
+<h2 class="text-xl font-semibold mb-3">Verify Document</h2>
+
+<input id="docIdVerify" placeholder="Document ID"
+class="border p-2 mr-3">
+
+<button onclick="verifyDoc()"
+class="bg-purple-600 text-white px-4 py-2 rounded">
+Verify
+</button>
+
+<p id="verifyResult" class="mt-3"></p>
+
+</div>
+
+<script src="/static/app.js"></script>
+<script>
+    window.onload = function () {
+    protectPage()
+    showUser()
+    checkRole()
+
+    setTimeout(() => {
+        loadDashboard()
+        loadSigners()
+    }, 100)   // ✅ ensures DOM is ready
+};
+    </script>
+
+</body>
+</html>
