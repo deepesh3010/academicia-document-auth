@@ -174,11 +174,11 @@ from fastapi.responses import FileResponse
 
 @app.get("/")
 def serve_login():
-    return FileResponse("/Users/apple/Desktop/Project/frontend/index.html")
+    return FileResponse("frontend/index.html")
 
 @app.get("/dashboard")
 def serve_dashboard():
-    return FileResponse("/Users/apple/Desktop/Project/frontend/dashboard.html")
+    return FileResponse("frontend/dashboard.html")
 
 # --------------------------------------------------
 # UPLOAD + HASH + SIGN
@@ -238,7 +238,7 @@ def sign_document(doc_id: str,current_user: User = Depends(get_current_user)):
         file_hash = hash_file(doc.file_path)
 
         # Load private key (Signer B)
-        with open("/Users/apple/Desktop/Project/crypto/private_key.pem", "rb") as f:
+        with open("crypto/private_key.pem", "rb") as f:
             private_key = serialization.load_pem_private_key(
             f.read(),
             password=None
@@ -263,7 +263,7 @@ def sign_document(doc_id: str,current_user: User = Depends(get_current_user)):
         # ---------------------------------
         # Generate QR
         # ---------------------------------
-        verification_link = f"http://172.20.10.3:8000/verify/{doc_id}"
+        verification_link = f"https://academicia-document-auth.onrender.com/verify/{doc_id}"
 
         qr = qrcode.make(verification_link)
         qr_path = f"{OUTPUT_FOLDER}/{doc_id}_qr.png"
